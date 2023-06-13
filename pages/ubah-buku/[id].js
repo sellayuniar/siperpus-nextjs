@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 
 const UbahData = () => {
   const router = useRouter();
-  let { id } = router.query;
 
   const [data, setData] = useState({
     nama_buku: "",
@@ -17,25 +16,28 @@ const UbahData = () => {
     tahun_terbit: "",
   });
 
-  const bukuDocRef = doc(db, "buku", id);
-
   useEffect(() => {
-    getBukuListById();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
-  const getBukuListById = async () => {
-    try {
-      const docSnap = await getDoc(bukuDocRef);
-      const dataBuku = docSnap.data();
-      setData(dataBuku);
-      console.log(dataBuku);
-    } catch (err) {
-      console.error(err);
+    const { id } = router.query;
+    if (id) {
+      const getBukuListById = async () => {
+        const bukuDocRef = doc(db, "buku", id);
+        try {
+          const docSnap = await getDoc(bukuDocRef);
+          const dataBuku = docSnap.data();
+          setData(dataBuku);
+          console.log(dataBuku);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      getBukuListById();
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);
 
   const handleUpdate = async (e) => {
+    const { id } = router.query;
+    const bukuDocRef = doc(db, "buku", id);
     e.preventDefault();
     try {
       await updateDoc(bukuDocRef, {

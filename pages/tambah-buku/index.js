@@ -41,7 +41,7 @@ const TambahData = () => {
     <Layout>
       <div className="align-center ml-10 flex justify-center">
         <div className="m-10 w-[550px] rounded-lg p-10 pt-2 shadow-lg shadow-gray-200">
-          <Judul nama="Form Ubah Simpan" />
+          <Judul nama="Form Tambah Buku" />
           <div>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
